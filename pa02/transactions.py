@@ -1,9 +1,10 @@
 import sqlite3
 
-class Transaction:                
- 
-    def __init__(self, filename): 
-        con=sqlite3.connect(filename)
+
+class Transaction:
+
+    def __init__(self, filename):
+        con = sqlite3.connect(filename)
         cur = con.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS transactions
                     ('item #'  text, amount integer, category text, date integer, description text)''')
@@ -13,7 +14,7 @@ class Transaction:
 
     def select_all(self):
         ''' return all of the transactions as a list of dicts.'''
-        con= sqlite3.connect(self.filename)
+        con = sqlite3.connect(self.filename)
         cur = con.cursor()
         cur.execute("SELECT * from transactions")
         tuples = cur.fetchall()
@@ -21,19 +22,20 @@ class Transaction:
         con.close()
         return tuples
 
-    def add(self,item):
-        con= sqlite3.connect(self.filename)
+    def add(self, item):
+        con = sqlite3.connect(self.filename)
         cur = con.cursor()
-        cur.execute("INSERT INTO transactions VALUES(?, ?, ?, ?, ?)",(item['item #'],item['amount'],item['category'],item['date'], item['description']))
+        cur.execute("INSERT INTO transactions VALUES(?, ?, ?, ?, ?)",
+                    (item['item #'], item['amount'], item['category'], item['date'], item['description']))
         con.commit()
         cur.execute("SELECT last_insert_rowid()")
         last_rowid = cur.fetchone()
         con.commit()
         con.close()
-        return last_rowid[0]  
+        return last_rowid[0]
 
-    def delete(self,trans_num):
-        con= sqlite3.connect(self.filename)
+    def delete(self, trans_num):
+        con = sqlite3.connect(self.filename)
         cur = con.cursor()
         cur.execute('''DELETE FROM transactions
                        WHERE "item #" = ?;
@@ -43,7 +45,7 @@ class Transaction:
 
     def summarize(self, col):
         con = sqlite3.connect(self.filename)
-        cur=con.cursor()
+        cur = con.cursor()
         if col in ('date_', 'month', 'year'):
             if col == 'year':
                 sub_str = 'substr(date,1,4)'
@@ -51,7 +53,8 @@ class Transaction:
                 sub_str = 'substr(date,5,2)'
             else:
                 sub_str = 'substr(date,7,2)'
-            cur.execute('''CREATE TEMPORARY TABLE tmp AS SELECT *, {0} as {1} FROM transactions;'''.format(sub_str, col))
+            cur.execute(
+                '''CREATE TEMPORARY TABLE tmp AS SELECT *, {0} as {1} FROM transactions;'''.format(sub_str, col))
             cur.execute('''
             SELECT {0}, COUNT(*), AVG(amount)
             FROM tmp
@@ -68,4 +71,3 @@ class Transaction:
         con.close()
         print(tuples)
         return(tuples)
-    

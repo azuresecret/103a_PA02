@@ -58,27 +58,27 @@ menu = '''
 
 
 def process_choice(choice):
-    if choice=='0':
+    if choice == '0':
         return
-    elif choice=='1':
+    elif choice == '1':
         cats = category.select_all()
         print_categories(cats)
-    elif choice=='2':
+    elif choice == '2':
         name = input("category name: ")
         desc = input("category description: ")
-        cat = {'name':name, 'desc':desc}
+        cat = {'name': name, 'desc': desc}
         category.add(cat)
-    elif choice=='3':
+    elif choice == '3':
         print("modifying category")
         rowid = int(input("rowid: "))
         name = input("new category name: ")
         desc = input("new category description: ")
-        cat = {'name':name, 'desc':desc}
-        category.update(rowid,cat)
-    elif choice =='4':
-        print ("showing transcations")
+        cat = {'name': name, 'desc': desc}
+        category.update(rowid, cat)
+    elif choice == '4':
+        print("showing transcations")
         trs = transactions.select_all()
-        print_transactions(trs)  
+        print_transactions(trs)
     elif choice == '5':
         print("adding transcations")
         item = input("transaction number: ")
@@ -86,28 +86,29 @@ def process_choice(choice):
         transcategory = input("category: ")
         date = input("date:")
         description = input("description")
-        cat = {'item #':item, 'amount':amount, 'category': transcategory, 'date': date, 'description': description}
-        transactions.add(cat)  
+        cat = {'item #': item, 'amount': amount, 'category': transcategory,
+               'date': date, 'description': description}
+        transactions.add(cat)
     elif choice == '6':
-        print("deleting a transaction") 
+        print("deleting a transaction")
         transaction_num = input("transaction number: ")
-        transactions.delete(transaction_num)  
+        transactions.delete(transaction_num)
     elif choice == '7':
         print('summarizing by date')
         print(transactions.summarize('date_'))
     elif choice == '8':
-            print('summarizing by month')
-            print(transactions.summarize('month') )
+        print('summarizing by month')
+        print(transactions.summarize('month'))
     elif choice == '9':
-            print('summarizing by year')
-            print(transactions.summarize('year') )
+        print('summarizing by year')
+        print(transactions.summarize('year'))
     elif choice == '10':
         print('summarizing by category')
         print(transactions.summarize('category'))
     elif choice == '11':
-        print(menu)  
+        print(menu)
     else:
-        print("choice",choice,"not yet implemented")
+        print("choice", choice, "not yet implemented")
 
     choice = input("> ")
     return(choice)
@@ -119,7 +120,7 @@ def toplevel():
     ''' read the command args and process them'''
     print(menu)
     choice = input("> ")
-    while choice !='0' :
+    while choice != '0':
         choice = process_choice(choice)
     print('bye')
 
@@ -127,23 +128,26 @@ def toplevel():
 # here are some helper functions
 #
 
+
 def print_transactions(items):
     ''' print the transactions '''
-    if len(items)==0:
+    if len(items) == 0:
         print('no items to print')
         return
     print('\n')
-    print("%-10s %-10s %-10s %-10s %-30s"%(
-        'item #','amount','category','date','description'))
+    print("%-10s %-10s %-10s %-10s %-30s" % (
+        'item #', 'amount', 'category', 'date', 'description'))
     print('-'*40)
     for item in items:
-        print("%-10s %-10d %-10s %-10d %-30s"%item)
+        print("%-10s %-10d %-10s %-10d %-30s" % item)
+
 
 def print_category(cat):
-    print("%-3d %-10s %-30s"%(cat['rowid'],cat['name'],cat['desc']))
+    print("%-3d %-10s %-30s" % (cat['rowid'], cat['name'], cat['desc']))
+
 
 def print_categories(cats):
-    print("%-3s %-10s %-30s"%("id","name","description"))
+    print("%-3s %-10s %-30s" % ("id", "name", "description"))
     print('-'*45)
     for cat in cats:
         print_category(cat)
@@ -152,4 +156,3 @@ def print_categories(cats):
 # here is the main call!
 
 toplevel()
-
