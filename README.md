@@ -2,7 +2,7 @@
 
 # PA02: tracker.py and the Transaction class
 
-1. Pytest:
+a. Pytest:
 pa02/test_category.py::test_to_cat_dict PASSED                           [ 12%]
 pa02/test_category.py::test_add PASSED                                   [ 25%]
 pa02/test_category.py::test_delete PASSED                                [ 37%]
@@ -12,7 +12,7 @@ pa02/test_transaction.py::test_add PASSED                                [ 75%]
 pa02/test_transaction.py::test_delete PASSED                             [ 87%]
 pa02/test_transaction.py::test_summarize PASSED                          [100%]
 
-2. Pylint:
+b. Pylint:
 ************* Module tracker
 tracker.py:29:61: C0303: Trailing whitespace (trailing-whitespace)
 tracker.py:114:0: C0325: Unnecessary parens after 'return' keyword (superfluous-parens)
@@ -86,6 +86,88 @@ test_category.py:105:16: W0621: Redefining name 'med_db' from outer scope (line 
 ------------------------------------------------------------------
 Your code has been rated at 8.50/10 (previous run: 7.67/10, +0.83)
 
+c. Output:
+0. quit
+1. show categories
+2. add category
+3. modify category
+4. show transactions
+5. add transaction
+6. delete transaction
+7. summarize transactions by date
+8. summarize transactions by month
+9. summarize transactions by year
+10. summarize transactions by category
+11. print this menu
+
+> 11
+
+0. quit
+1. show categories
+2. add category
+3. modify category
+4. show transactions
+5. add transaction
+6. delete transaction
+7. summarize transactions by date
+8. summarize transactions by month
+9. summarize transactions by year
+10. summarize transactions by category
+11. print this menu
+
+> 5
+adding transcations
+transaction number: 1
+transaction amount: 100
+category: food
+date:19940412
+description baby food
+> 5
+adding transcations
+transaction number: 2
+transaction amount: 100
+category: food
+date:19940413
+description baby food
+> 4
+showing transcations
 
 
+item #     amount     category   date       description                   
+----------------------------------------
+1          100        food       19940412    baby food                    
+2          100        food       19940413    baby food                    
+> 7
+summarizing by date
+[('12', 1, 100.0), ('13', 1, 100.0)]
+[('12', 1, 100.0), ('13', 1, 100.0)]
+> 8
+summarizing by month
+[('04', 2, 100.0)]
+[('04', 2, 100.0)]
+> 9
+summarizing by year
+[('1994', 2, 100.0)]
+[('1994', 2, 100.0)]
+> 10
+summarizing by category
+[('food', 2, 100.0)]
+[('food', 2, 100.0)]
+> 6
+deleting a transaction
+transaction number: 1
+> 4
+showing transcations
+
+
+item #     amount     category   date       description                   
+----------------------------------------
+2          100        food       19940413    baby food                    
+> 6
+deleting a transaction
+transaction number: 2
+> 4
+showing transcations
+no items to print
+> 
 
