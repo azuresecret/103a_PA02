@@ -31,11 +31,11 @@ could be replaced with PostgreSQL or Pandas or straight python lists
 
 '''
 
-#from transactions import Transaction
+from transactions import Transaction
 from category import Category
 import sys
 
-#transactions = Transaction('tracker.db')
+transactions = Transaction('tracker.db')
 category = Category('tracker.db')
 
 
@@ -57,10 +57,7 @@ menu = '''
 '''
 
 
-
-
 def process_choice(choice):
-
     if choice=='0':
         return
     elif choice=='1':
@@ -78,6 +75,37 @@ def process_choice(choice):
         desc = input("new category description: ")
         cat = {'name':name, 'desc':desc}
         category.update(rowid,cat)
+    elif choice =='4':
+        print ("showing transcations")
+        trs = transactions.select_all()
+        print_transactions(trs)  
+    elif choice == '5':
+        print("adding transcations")
+        item = input("transaction number: ")
+        amount = input("transaction amount: ")
+        transcategory = input("category: ")
+        date = input("date:")
+        description = input("description")
+        cat = {'item #':item, 'amount':amount, 'category': transcategory, 'date': date, 'description': description}
+        transactions.add(cat)  
+    elif choice == '6':
+        print("deleting a transaction") 
+        transaction_num = input("transaction number: ")
+        transactions.delete(transaction_num)  
+    elif choice == '7':
+        print('summarizing by date')
+        print(transactions.summarize('date_'))
+    elif choice == '8':
+            print('summarizing by month')
+            print(transactions.summarize('month') )
+    elif choice == '9':
+            print('summarizing by year')
+            print(transactions.summarize('year') )
+    elif choice == '10':
+        print('summarizing by category')
+        print(transactions.summarize('category'))
+    elif choice == '11':
+        print(menu)  
     else:
         print("choice",choice,"not yet implemented")
 
@@ -105,12 +133,11 @@ def print_transactions(items):
         print('no items to print')
         return
     print('\n')
-    print("%-10s %-10d %-10s %-10d %-30s"%(
+    print("%-10s %-10s %-10s %-10s %-30s"%(
         'item #','amount','category','date','description'))
     print('-'*40)
     for item in items:
-        values = tuple(item.values()) 
-        print("%-10s %-10d %-10s %-10d %-30s"%values)
+        print("%-10s %-10d %-10s %-10d %-30s"%item)
 
 def print_category(cat):
     print("%-3d %-10s %-30s"%(cat['rowid'],cat['name'],cat['desc']))
